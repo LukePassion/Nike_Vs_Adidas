@@ -1,0 +1,78 @@
+#Fazendo o upload do arquivo
+adidas_vs_nike_df = spark.read.csv("/FileStore/tables/nike_vs_adidas.csv", header=True, inferSchema=True)
+
+---------------------------------------------------
+
+#Criando uma nova VIEW com os nomes adequados para o padrão snake_case
+
+%sql
+CREATE OR REPLACE TEMP VIEW adidas_vs_nike_clean AS
+SELECT
+  `Product Name`      AS product_name,
+  `Product ID`        AS product_id,
+  `Listing Price`     AS listing_price,
+  `Sale Price`        AS sale_price,
+  Discount            AS discount,
+  Brand               AS brand,
+  Description         AS description,
+  Rating              AS rating,
+  Reviews             AS reviews,
+  `Last Visited`      AS last_visited
+FROM nike_vs_adidas;
+
+---------------------------------------------------
+Eliminando duplicatas e criando uma nova tabela limpa:
+
+%sql
+CREATE OR REPLACE TEMP VIEW adidas_vs_nike_deduplicated AS
+SELECT DISTINCT * FROM adidas_vs_nike_clean;
+
+---------------------------------------------------
+
+Salvando como tabela Delta:
+
+%sql
+CREATE OR REPLACE TABLE nike_vs_adidas
+USING DELTA
+AS
+SELECT * FROM adidas_vs_nike_deduplicated
+
+-----------------------------------------------------
+
+#Há um desbalanceamento entre dados registrados da Adidas e da Nike, sendo a Adidas tendo o dobro de itens cadastrados.
+Então aqui é feito um balanceamento para que as duas marcas fiquem com o mesmo número de registros e haja um bom
+balanceamento entre os dados.
+
+%sql
+CREATE OR REPLACE TEMP VIEW nike_vs_adidas_balanced AS
+SELECT * FROM (
+    -- Seleciona todos os registros da Nike
+    SELECT * FROM nike_vs_adidas WHERE brand = 'Nike'
+    
+    UNION ALL
+
+    -- Seleciona aleatoriamente 643 registros da Adidas
+    SELECT * FROM (
+        SELECT * FROM nike_vs_adidas 
+        WHERE brand LIKE 'Adidas%' -- pega todos os tipos de Adidas
+        ORDER BY rand()
+        LIMIT 643
+    )
+);
+
+--------------------------------------------------------
+
+#A tabela balanceada é criada
+
+%sql
+CREATE OR REPLACE TABLE nike_vs_adidas_equal
+AS
+SELECT * FROM nike_vs_adidas_balanced;
+--------------------------------------------------------
+
+O nome da tabela é definido para nike_vs_adidas_equal
+
+%sql
+UPDATE nike_vs_adidas_equal
+SET brand = 'Adidas'
+WHERE brand LIKE 'Adidas%';
