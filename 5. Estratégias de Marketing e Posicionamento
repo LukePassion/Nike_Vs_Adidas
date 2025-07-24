@@ -1,0 +1,49 @@
+5. AVALIAR ESTRATÉGIA DE MARKETING E POSICIONAMENTO
+-- Quais as 10 palavras que mais aparecem nas descrições de produtos de cada marca?
+
+Resultados: Adidas: shoes(545), upper(419), outsole(249), midsole(236), mesh(230), 
+                       rubber(204), cushioning(201), running(194), lightweight(150), comfort(145)
+                       
+            Nike: air(460), max(230), upper(160), cushioning(132), design(107), 
+                  zoom(106), foam(106), react(97), traction(93), comfort(85) 
+
+Código: WITH palavras AS (SELECT brand, LOWER(word) AS palavra
+        FROM nike_vs_adidas_equal
+        LATERAL VIEW explode(split(description, ' ')) AS word)
+
+        SELECT brand, palavra, COUNT(*) AS total_ocorrencias
+        FROM palavras
+        WHERE palavra NOT IN ("the", "and", "for", "with", "you", "are", "from", "your", "all", "has")
+        GROUP BY brand, palavra
+        ORDER BY brand, total_ocorrencias DESC;
+
+--------------------------------------------------------------------------
+
+-- Existem padrões no tipo de linguagem ou termos usados por Adidas e Nike? 
+   Resultados: Padrões Apresentados: Adidas: outras:	18670, 
+                                             estilo: 148, 
+                                             tecnica: 69, 
+                                             performance: 59
+               
+                                     Nike:   outras:	14767, 
+                                             tecnica: 93, 
+                                             estilo:	65,
+                                             performance 49
+
+Código: WITH palavras AS (SELECT brand, LOWER(word) AS palavra
+        FROM nike_vs_adidas_equal
+        LATERAL VIEW explode(split(description, ' ')) AS word),
+
+        palavras_classificadas AS (SELECT brand, palavra,
+        CASE WHEN palavra IN ('performance', 'training', 'athlete', 'speed', 'sport') THEN 'performance'
+        WHEN palavra IN ('style', 'street', 'urban', 'fashion') THEN 'estilo'
+        WHEN palavra IN ('engineered', 'technology', 'responsive') THEN 'tecnica'
+        ELSE 'outras'
+        END AS categoria
+        FROM palavras)
+
+        SELECT brand, categoria, COUNT(*) AS total_palavras
+        FROM palavras_classificadas
+        WHERE palavra NOT IN ("the", "and", "for", "with", "you", "are", "are", "from", "your", "all", "has") AND LENGTH(palavra) > 3
+        GROUP BY brand, categoria
+        ORDER BY brand, total_palavras DESC;
