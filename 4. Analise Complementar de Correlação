@@ -1,4 +1,4 @@
--2.5 ANÁLISE COMPLEMENTAR DE CORRELAÇÃO (PREÇO x RATING x REVIEWS)
+-4. ANÁLISE COMPLEMENTAR DE CORRELAÇÃO (PREÇO x RATING x REVIEWS)
 
 -- Existe correlação entre preço, rating e número de reviews?
 Resultados: Adidas: Preços bem distribuídos, Ratings e reviews razoáveis. A média de rating é 3.40 e de reviews 49.01, 
