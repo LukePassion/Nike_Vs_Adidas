@@ -11,6 +11,8 @@ Código:SELECT brand, ROUND(AVG(listing_price), 2) AS avg_price
        GROUP BY brand
        ORDER BY avg_price DESC;
 
+-------------------------------------------------------------
+
 --- Qual marca oferece o maior desconto médio? 
 Adidas: 2464 
 Nike: 3247
@@ -23,6 +25,8 @@ Código: SELECT brand, ROUND(AVG(listing_price - sale_price)) AS avg_discount
         WHERE listing_price > 0
         GROUP BY brand
         ORDER BY avg_discount DESC;
+
+-------------------------------------------------------------
 
 --Qual tem a menor diferença entre preço listado e preço final (valor percebido)?
 Adidas: 0
