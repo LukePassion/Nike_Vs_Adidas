@@ -1,0 +1,50 @@
+-2.5 ANÁLISE COMPLEMENTAR DE CORRELAÇÃO (PREÇO x RATING x REVIEWS)
+
+-- Existe correlação entre preço, rating e número de reviews?
+Resultados: Adidas: Preços bem distribuídos, Ratings e reviews razoáveis. A média de rating é 3.40 e de reviews 49.01, 
+indicando que os produtos têm alguma popularidade. A baixa correlação sugere uma forma de avaliação inconsistente com 
+relação ao preço ou falta de avaliação suficiente para formar um padrão. Em resumo: A Adidas apresenta dados aparentemente 
+válidos, mas o comportamento dos usuários não gera correlação clara. 
+            Nike: A média de rating é baixa (2,73) e os reviews são bem baixos (média de 7,18), mesmo com um preço médio mais alto, 
+os clientes não avaliam muito bem. A maior quantidade de reviews é de 223, em um universo com média 7 indica que poucos produtos
+concentram muitas avaliações. Isso pode estar enviesando a correlação positiva moderada entre Rating e reviews na Nike (0.30)
+
+Código:
+-- Obtendo todas as estatísticas por marca para comparação 
+WITH adidas AS (SELECT MIN(sale_price) AS min_price,
+MAX(sale_price) AS max_price,
+AVG(sale_price) AS avg_price,
+MIN(rating) AS min_rating,
+MAX(rating) AS max_rating,
+AVG(rating) AS avg_rating,
+MIN(reviews) AS min_reviews,
+MAX(reviews) AS max_reviews,
+AVG(reviews) AS avg_reviews
+FROM nike_vs_adidas_equal
+WHERE brand = 'Adidas'),
+
+nike AS (SELECT MIN(sale_price) AS min_price,
+MAX(sale_price) AS max_price,
+AVG(sale_price) AS avg_price,
+MIN(rating) AS min_rating,
+MAX(rating) AS max_rating,
+AVG(rating) AS avg_rating,
+MIN(reviews) AS min_reviews,
+MAX(reviews) AS max_reviews,
+AVG(reviews) AS avg_reviews
+FROM nike_vs_adidas_equal
+WHERE brand = 'Nike')
+
+SELECT 'Adidas' AS brand, *
+FROM adidas 
+UNION ALL
+SELECT 'Nike' AS brand, *
+FROM nike;
+
+SELECT brand, 
+CORR(sale_price, rating) AS corr_price_rating,
+CORR(sale_price, reviews) AS corr_price_reviews,
+CORR(rating, reviews) AS corr_rating_reviews
+FROM nike_vs_adidas_equal
+WHERE sale_price > 0
+GROUP BY brand;
