@@ -1,0 +1,37 @@
+1. COMPARANDO DESEMPENHO COMERCIAL
+
+--- Qual marca tem maior preço médio?
+Adidas:7.447,36
+Nike: R$ 3.875,76
+Resultado: A Adidas mantém um ticket médio consideravelmente mais alto, sendo reforçada a ideia de que ela: atua com produtos mais caros/premium, 
+tenha listagens inflacionadas por revendedores. Já a Nike aparece mais competitiva em questão de preço. 
+
+Código:SELECT brand, ROUND(AVG(listing_price), 2) AS avg_price
+       FROM nike_vs_adidas_equal
+       GROUP BY brand
+       ORDER BY avg_price DESC;
+
+--- Qual marca oferece o maior desconto médio? 
+Adidas: 2464 
+Nike: 3247
+Resultado: A Nike oferece mais desconto em média - cerca de R$800 a mais que a Adidas. Isso pode indicar: uma estratégia mais agressiva
+de promoção/desova de estoque, preços inflados inicialmente para simular grandes descontos (algo comum em marketplace), 
+ou um posicionamento comercial mais agressivo apenas.
+
+Código: SELECT brand, ROUND(AVG(listing_price - sale_price)) AS avg_discount
+        FROM nike_vs_adidas_equal
+        WHERE listing_price > 0
+        GROUP BY brand
+        ORDER BY avg_discount DESC;
+
+--Qual tem a menor diferença entre preço listado e preço final (valor percebido)?
+Adidas: 0
+NIKE: 598
+Resultado: A Adidas não apresenta descontos enquanto a Nike sim. Chegamos à conclusão de que: A Adidas cobra mais e oferece poucos descontos, 
+a Nike tem preços mais acessíveis e descontos maiores. Indicando que: mesmo com produtos parecidos, pode haver um posicionamento comercial distinto, 
+a Adidas foca em margem, enquanto a Nike foca em volume e agressividade promocional.
+
+Código: SELECT brand, MIN(listing_price - sale_price) AS min_price
+        FROM nike_vs_adidas_equal
+        WHERE listing_price > 0
+        GROUP BY brand;
