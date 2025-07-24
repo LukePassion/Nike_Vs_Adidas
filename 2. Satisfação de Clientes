@@ -1,0 +1,26 @@
+--2. ANALISAR A SATISFAÇÃO DOS CLIENTES
+
+-- Qual marca tem a melhor média de avaliação?
+ 
+Resultados: Adidas 3.40
+            Nike:2.73 
+
+Comentário: A Adidas, está com média de avaliação melhor. A diferença é relevante, indicando maior aceitação dos produtos Adidas, mesmo com preços mais altos.
+
+Código: SELECT brand, ROUND(AVG(rating), 2) AS avg_rating 
+        FROM nike_vs_adidas_equal
+        GROUP BY brand
+        ORDER BY avg_rating;
+
+-- Qual marca tem mais reviews em média por produto? 
+
+Resultado: Adidas: 49.01
+           Nike: 7.18 
+
+Comentário: A Adidas recebe quase 7x mais avaliações por produto. Isso pode indicar maior volume de vendas, visibilidade,
+ou marketing mais eficaz com foco no consumidor.
+
+Código: SELECT brand, ROUND(AVG(reviews), 2) AS avg_reviews
+        FROM nike_vs_adidas_equal
+        GROUP BY brand
+        ORDER BY avg_reviews;
