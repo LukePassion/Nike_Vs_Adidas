@@ -1,7 +1,7 @@
 #Fazendo o upload do arquivo
 adidas_vs_nike_df = spark.read.csv("/FileStore/tables/nike_vs_adidas.csv", header=True, inferSchema=True)
 
----------------------------------------------------
+--------------------------------------------------
 
 #Criando uma nova VIEW com os nomes adequados para o padrão snake_case
 
