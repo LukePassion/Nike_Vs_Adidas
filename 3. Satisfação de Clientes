@@ -1,4 +1,4 @@
---2. ANALISAR A SATISFAÇÃO DOS CLIENTES
+3. ANALISAR A SATISFAÇÃO DOS CLIENTES
 
 -- Qual marca tem a melhor média de avaliação?
  
@@ -11,6 +11,8 @@ Código: SELECT brand, ROUND(AVG(rating), 2) AS avg_rating
         FROM nike_vs_adidas_equal
         GROUP BY brand
         ORDER BY avg_rating;
+
+--------------------------------------------------------
 
 -- Qual marca tem mais reviews em média por produto? 
 
