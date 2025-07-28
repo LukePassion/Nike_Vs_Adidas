@@ -1,0 +1,24 @@
+Conclusão do Projeto
+
+A análise comparativa entre Nike e Adidas revelou insights valiosos sobre o comportamento dos consumidores, a estrutura de portfólio de produtos 
+e as estratégias de posicionamento de cada marca. Por meio de uma abordagem estruturada em etapas no ambiente Databricks, foi possível transformar 
+dados brutos em informações úteis e acionáveis.
+
+Entre os principais achados do projeto, destacam-se:
+
+* Desbalanceamento de dados inicial (com grande predominância da Adidas), corrigido com um tratamento adequado para garantir uma análise justa.
+* A Nike apresentou maior número de produtos com rating 5, mas com menor média de reviews, o que pode indicar avaliações mais recentes ou menor engajamento por produto.
+* A Adidas, por outro lado, se destacou pelo maior volume de reviews por item e preços médios mais altos, sugerindo um posicionamento mais premium em diversas linhas.
+* Foi possível identificar picos de visitação em horários específicos, indicando momentos de maior tráfego e interesse por parte dos consumidores.
+* As linhas de produto mais populares e seus respectivos desempenhos foram mapeados, auxiliando na visualização do foco estratégico de cada marca.
+
+Esse projeto não só fortalece habilidades analíticas com SQL e visualização de dados no Databricks, como também proporciona uma visão prática de como
+os dados podem orientar decisões de negócio seja no varejo esportivo ou outras áreas.
+
+Como próximos passos, destaca-se a importância de:
+
+* Explorar ferramentas de visualização mais avançadas, como Power BI ou Tableau.
+* Implementar análises preditivas baseadas em comportamento de consumo.
+* Incorporar dados externos (como campanhas publicitárias, sazonalidade ou localização geográfica) para enriquecer a análise.
+
+Este estudo reforça a relevância da análise de dados como ferramenta estratégica para compreender o mercado, antecipar tendências e melhorar a experiência do consumidor.
