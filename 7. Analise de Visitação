@@ -1,0 +1,27 @@
+7. Entendendo o Portfólio de produtos
+-- As linhas como "Adidas Originals" seguem padrões específicos de preço ou avaliação? 
+
+Resultado: Maiores preços: Adidas Originals: 299.99 
+                           Sport Performance: 279.99 
+                           Core/Neo: 79.99 
+                           adidas Adidas Originals: 74.99
+           Menores preços: Adidas Originals: 75.99, 
+                           Sport Performance: 29.99
+                           Core/Neo: 18.89 
+                           adidas Adidas Originals: 74.99
+
+Código: SELECT DISTINCT brand, sale_price, listing_price
+        FROM nike_vs_adidas
+        WHERE brand lIKE 'Adidas%'
+        LIMIT 643;
+
+------------------------------------------------------------------------------------
+
+-- Quais categorias têm maior volume de produtos em destaque? 
+Resultdo: A linha da Adidas CORE/NEO é a que apresenta maior volume de produtos com o total de 1111 produtos, 
+seguindo de: Adidas ORIGINALS: 907, Nike: 643, Adidas Sport Performance: 606 e Adidas adidas ORIGINALS: 1
+
+Código: SELECT brand, COUNT(*) AS total_products
+        FROM nike_vs_adidas
+        GROUP BY brand
+        ORDER BY total_products DESC;
